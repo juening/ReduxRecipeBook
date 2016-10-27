@@ -22,16 +22,26 @@ class RecipesPage extends Component {
     this.props.dispatch(recipeActions.createRecipe(this.state.recipe));
   }
 
+  recipeRow(recipe, index){
+    return (<div key={index}>{recipe.title}</div>);
+  }
+  
   render() {
     return (
       <div>
         <h1>Recipes</h1>
+        {this.props.recipes.map(this.recipeRow)}
         <input type="text" onChange={this.onTitleChange} value={this.state.recipe.title} />
         <input type="submit" value="Save" onClick={this.onClickSave} />
       </div>
     );
   }
 }
+
+RecipesPage.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  recipes: PropTypes.array.isRequired
+};
 
 function mapStateToProps(state, ownProps) {
   return {
