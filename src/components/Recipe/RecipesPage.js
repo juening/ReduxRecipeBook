@@ -19,14 +19,15 @@ class RecipesPage extends Component {
   }
 
   onClickSave(){
-    this.props.dispatch(recipeActions.createRecipe(this.state.recipe));
+    this.props.createRecipe(this.state.recipe);
   }
 
   recipeRow(recipe, index){
     return (<div key={index}>{recipe.title}</div>);
   }
-  
+
   render() {
+
     return (
       <div>
         <h1>Recipes</h1>
@@ -44,10 +45,15 @@ RecipesPage.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+
   return {
     recipes: state.recipes
   };
 }
 
-
-export default connect(mapStateToProps)(RecipesPage);
+function mapDispatchToProps(dispatch){
+  return {
+    createRecipe: (recipe) => dispatch(recipeActions.createRecipe(recipe))
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesPage);
