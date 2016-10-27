@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect}  from 'react-redux';
+import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 
 class RecipesPage extends Component {
@@ -19,7 +20,7 @@ class RecipesPage extends Component {
   }
 
   onClickSave(){
-    this.props.createRecipe(this.state.recipe);
+    this.props.actions.createRecipe(this.state.recipe);
   }
 
   recipeRow(recipe, index){
@@ -40,7 +41,7 @@ class RecipesPage extends Component {
 }
 
 RecipesPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   recipes: PropTypes.array.isRequired
 };
 
@@ -53,7 +54,7 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch){
   return {
-    createRecipe: (recipe) => dispatch(recipeActions.createRecipe(recipe))
+    actions: bindActionCreators(recipeActions, dispatch)
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesPage);
