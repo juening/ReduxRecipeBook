@@ -1,4 +1,6 @@
 import React, {Component, PropTypes} from 'react';
+import {connect}  from 'react-redux';
+import * as recipeActions from '../../actions/recipeActions';
 
 class RecipesPage extends Component {
   constructor(props, context) {
@@ -17,7 +19,7 @@ class RecipesPage extends Component {
   }
 
   onClickSave(){
-    alert(`Saving ${this.state.recipe.title}`);
+    this.props.dispatch(recipeActions.createRecipe(this.state.recipe));
   }
 
   render() {
@@ -31,4 +33,11 @@ class RecipesPage extends Component {
   }
 }
 
-export default RecipesPage;
+function mapStateToProps(state, ownProps) {
+  return {
+    recipes: state.recipes
+  };
+}
+
+
+export default connect(mapStateToProps)(RecipesPage);
