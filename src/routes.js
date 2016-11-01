@@ -10,6 +10,7 @@ export default (
   <Route path="/" component={App} >
     <IndexRoute component={HomePage} />
     <Route path="recipes" component={RecipesPage} />
+    <Route path="recipe" component={ManageRecipePage} />
     <Route path="recipe/:id" component={ManageRecipePage} />
     <Route path="about" component={AboutPage} />
   </Route>

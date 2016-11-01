@@ -3,10 +3,12 @@ import {connect}  from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeList from './RecipeList';
+import {browserHistory} from 'react-router';
 
 class RecipesPage extends Component {
   constructor(props, context) {
     super(props, context);
+    this.redirectToAddRecipePage = this.redirectToAddRecipePage.bind(this);
     // this.state = {
     //   recipe: {title: ''}
     // };
@@ -23,6 +25,9 @@ class RecipesPage extends Component {
   // onClickSave(){
   //   this.props.actions.createRecipe(this.state.recipe);
   // }
+  redirectToAddRecipePage(){
+    browserHistory.push('/recipe');
+  }
 
   recipeRow(recipe, index){
     return (<div key={index}>{recipe.title}</div>);
@@ -33,6 +38,8 @@ class RecipesPage extends Component {
     return (
       <div>
         <h1>Recipes</h1>
+        <input type="submit" value="Add Course" className="btn btn-primary" onClick={this.redirectToAddRecipePage} />
+
         <RecipeList recipes={recipes} />
         {/* {this.props.recipes.map(this.recipeRow)}
         <input type="text" onChange={this.onTitleChange} value={this.state.recipe.title} />

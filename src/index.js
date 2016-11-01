@@ -6,11 +6,13 @@ import {Provider} from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import {loadRecipes} from './actions/recipeActions';
+import {loadCategories} from './actions/categoryActions';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore();
 store.dispatch(loadRecipes());
+store.dispatch(loadCategories());
 
 render(
   <Provider store={store}>
