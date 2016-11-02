@@ -4,8 +4,9 @@ import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
 import toastr from 'toastr';
+import {categoriesFormattedForDropdown} from '../../selectors/selectors';
 
-class ManageRecipePage extends Component {
+export class ManageRecipePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -36,8 +37,24 @@ class ManageRecipePage extends Component {
     this.context.router.push('/recipes');
   }
 
+  recipeFormIsValid(){
+    let formIsValid = true;
+    let errors = {};
+
+    if(this.state.recipe.title.length < 5) {
+      errors.title = 'Title must be at least 5 characters.';
+      formIsValid = false;
+    }
+
+    this.setState({errors: errors});
+    return formIsValid;
+  }
+
   saveRecipe(event) {
     event.preventDefault();
+    if(!this.recipeFormIsValid()){
+      return;
+    }
     this.setState({saving:true});
     this.props.actions.saveRecipe(this.state.recipe)
       .then(() => this.redirect())
@@ -86,16 +103,11 @@ function mapStateToProps(state,ownProps){
     recipe = getRecipeById(state.recipes, recipeId);
   }
 
-  const categoriesFormattedForDropdown = state.categories.map(category => {
-    return {
-      value: category.id,
-      text: category.name
-    };
-  });
+
 
   return {
     recipe:recipe,
-    categories: categoriesFormattedForDropdown
+    categories: categoriesFormattedForDropdown(state.categories)
   };
 }
 
