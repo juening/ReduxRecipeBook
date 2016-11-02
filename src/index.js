@@ -9,6 +9,7 @@ import {loadRecipes} from './actions/recipeActions';
 import {loadCategories} from './actions/categoryActions';
 import './styles/styles.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/toastr/build/toastr.min.css';
 
 const store = configureStore();
 store.dispatch(loadRecipes());

@@ -3,13 +3,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as recipeActions from '../../actions/recipeActions';
 import RecipeForm from './RecipeForm';
+import toastr from 'toastr';
 
 class ManageRecipePage extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       recipe: Object.assign({}, props.recipe),
-      errors: {}
+      errors: {},
+      saving: false
     };
     this.updateRecipeState = this.updateRecipeState.bind(this);
     this.saveRecipe = this.saveRecipe.bind(this);
@@ -28,10 +30,21 @@ class ManageRecipePage extends Component {
     return this.setState({recipe:recipe});
   }
 
+  redirect(){
+    this.setState({saving:false});
+    toastr.success('Recipe saved!');
+    this.context.router.push('/recipes');
+  }
+
   saveRecipe(event) {
     event.preventDefault();
-    this.props.actions.saveRecipe(this.state.recipe);
-    this.context.router.push('/recipes');
+    this.setState({saving:true});
+    this.props.actions.saveRecipe(this.state.recipe)
+      .then(() => this.redirect())
+      .catch(error=>{
+        toastr.error(error);
+        this.setState({saving:false});
+      });
   }
 
   render() {
@@ -42,6 +55,7 @@ class ManageRecipePage extends Component {
         errors={this.state.errors}
         onChange={this.updateRecipeState}
         onSave={this.saveRecipe}
+        saving={this.state.saving}
       />
     );
   }
@@ -65,7 +79,7 @@ function getRecipeById(recipes, id) {
 }
 
 function mapStateToProps(state,ownProps){
-  const recipeId = ownProps.params.id; //from the path '/course/:id'
+  const recipeId = ownProps.params.id; //from the path '/recipe/:id'
   let recipe  = {id: "", title:"", category: "", time: ""};
 
   if(recipeId && state.recipes.length > 0) {

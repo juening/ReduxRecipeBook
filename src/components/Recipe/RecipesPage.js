@@ -38,7 +38,7 @@ class RecipesPage extends Component {
     return (
       <div>
         <h1>Recipes</h1>
-        <input type="submit" value="Add Course" className="btn btn-primary" onClick={this.redirectToAddRecipePage} />
+        <input type="submit" value="Add Recipe" className="btn btn-primary" onClick={this.redirectToAddRecipePage} />
 
         <RecipeList recipes={recipes} />
         {/* {this.props.recipes.map(this.recipeRow)}
