@@ -9,7 +9,7 @@ const RecipeForm = ({recipe, allCategories, onSave, onChange, saving, errors}) =
       <TextInput name="title" label="Title" value={recipe.title} onChange={onChange} error={errors.title} />
       <SelectInput name="category" label="Category" value={recipe.category} defaultOption="Select Category" options={allCategories} onChange={onChange} error={errors.category} />
       <TextInput name="time" label="Time" value={recipe.time} onChange={onChange} error={errors.time} />
-      <input type="submit" disabled={saving} value={saving? 'Saving...' : 'Save'} className="btn btn-primary" onClick={onSave} />
+      <input type="submit" disabled={saving} value={saving? 'Saving':'Save'} className="btn btn-primary" onClick={onSave} />
     </form>
   );
 };
